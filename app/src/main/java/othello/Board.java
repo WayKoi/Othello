@@ -31,7 +31,7 @@ public class Board {
      * @param x X position
      * @param y Y position
      */
-    public void ReplacePiece (Space type, int x, int y) {
+    private void ReplacePiece (Space type, int x, int y) {
         if (x < 1 || x > BoardSize || y < 1 || y > BoardSize) { return; }
         board[x][y] = type;
     }
@@ -100,15 +100,29 @@ public class Board {
         }
     }
     
+    public int CountSpaces (Space colour) {
+        int count = 0;
+    
+        for (int i = 1; i <= BoardSize; i++) {
+            for (int ii = 1; ii <= BoardSize; ii++) {
+                if (board[i][ii] == colour) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
     @Override
     public String toString () {
         String build = "";
     
-        String chars = ".wb";
+        String chars = ".bw";
     
         for (int i = 0; i < BoardSize + 2; i++) {
             for (int ii = 0; ii < BoardSize + 2; ii++) {
-                build += chars.charAt(board[ii][i].ordinal()) + " ";
+                build += chars.charAt(board[ii][i].ordinal());
             }
             
             build += '\n';

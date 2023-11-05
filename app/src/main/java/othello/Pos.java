@@ -26,6 +26,11 @@ public class Pos {
         Y(y);
     }
     
+    public Pos (Pos dupe) {
+        X(dupe.X());
+        Y(dupe.Y());
+    }
+    
     @Override
     public String toString () {
         return String.format("(%d, %d)", x, y);

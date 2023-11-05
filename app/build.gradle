@@ -37,6 +37,10 @@ application {
     mainClass = 'othello.App'
 }
 
+run {
+    standardInput = System.in
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
