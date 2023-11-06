@@ -95,16 +95,16 @@ public class App {
                         System.out.println("That move is not allowed, try again");
                     }
                 }
-                
-                if (!game.IsGameOver()) {
+            } else {
+                game.MakeAIMove();
+            }
+            
+            if (!game.IsGameOver()) {
                     // if the turn player is the same after playing a move then the opponents turn was skipped
                     if (player == game.CurrentTurn()) {
                         System.out.println("\n" + GetTurnName(Board.GetReverse(game.CurrentTurn())) + " skips their turn");
                     }
                 }
-            } else {
-                game.MakeAIMove();
-            }
             
             player = game.CurrentTurn();
         }
