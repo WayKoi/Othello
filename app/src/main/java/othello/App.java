@@ -100,11 +100,11 @@ public class App {
             }
             
             if (!game.IsGameOver()) {
-                    // if the turn player is the same after playing a move then the opponents turn was skipped
-                    if (player == game.CurrentTurn()) {
-                        System.out.println("\n" + GetTurnName(Board.GetReverse(game.CurrentTurn())) + " skips their turn");
-                    }
+                // if the turn player is the same after playing a move then the opponents turn was skipped
+                if (player == game.CurrentTurn()) {
+                    System.out.println("\n" + GetTurnName(Board.GetReverse(game.CurrentTurn())) + " skips their turn");
                 }
+            }
             
             player = game.CurrentTurn();
         }
