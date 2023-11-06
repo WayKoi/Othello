@@ -31,7 +31,7 @@ public class Board {
      * @param x X position
      * @param y Y position
      */
-    private void ReplacePiece (Space type, int x, int y) {
+    public void ReplacePiece (Space type, int x, int y) {
         if (x < 1 || x > BoardSize || y < 1 || y > BoardSize) { return; }
         board[x][y] = type;
     }

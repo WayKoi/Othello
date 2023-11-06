@@ -17,29 +17,42 @@ public class App {
         
         boolean countChosen = false;
         while (!countChosen) {
-            System.out.print("How many players? (0, 1 or 2)\n> ");
-            int amt = inp.nextInt();
-            countChosen = true;
+            System.out.print("How many players? (0, 1 or 2) or load a file with \"l (filename)\"\n> ");
+            String[] read = inp.nextLine().split(" ");
             
-            switch (amt) {
-                case 0:
-                    players[0] = false;
-                    players[1] = false;
-                    break;
-                case 1:
-                    System.out.print("Play black or white? (0 = black, 1 = white)\n> ");
-                    int col = Math.min(Math.max(inp.nextInt(), 0), 1);
+            if (read.length > 1 && read[0].charAt(0) == 'l') {
+                countChosen = game.LoadBoard(read[1]);
+                if (!countChosen) {
+                    System.out.println("File could not be read");
+                }
+            } else {
+                try {
+                    int amt = Integer.parseInt(read[0]);
+                    countChosen = true;
                     
-                    players[(col + 1) % 2] = false;
-                    break;
-                case 2:
-                    break;
-                default:
-                    countChosen = false;
-                    break;
+                    switch (amt) {
+                        case 0:
+                            players[0] = false;
+                            players[1] = false;
+                            break;
+                        case 1:
+                            System.out.print("Play black or white? (0 = black, 1 = white)\n> ");
+                            int col = Math.min(Math.max(inp.nextInt(), 0), 1);
+                            
+                            players[(col + 1) % 2] = false;
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            countChosen = false;
+                            break;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.print("Please enter a number");
+                }
             }
         }
-        
+
         Space player = game.CurrentTurn();
         while (!game.IsGameOver()) {
             String turn = GetTurnName(game.CurrentTurn());
@@ -51,12 +64,34 @@ public class App {
                 boolean correct = false;
             
                 while (!correct) {
-                    System.out.print("Enter Move to make (x y)\n> ");
-                    int x = inp.nextInt();
-                    int y = inp.nextInt();
+                    System.out.print("\nEnter Move to make (x y)\n> ");
+                    String input = inp.nextLine();
+                    String[] split = input.split(" ");
                     
-                    correct = game.PlacePiece(new Pos(x, y));
-                    if (!correct) {
+                    try {
+                        if (split.length > 1) {
+                            if (split[0].equals("s")) {
+                                correct = game.SaveToFile(split[1]);
+                                if (!correct) {
+                                    System.out.println("Unable to save to file");
+                                }
+                            } else {
+                                int x = Integer.parseInt(split[0]);
+                                int y = Integer.parseInt(split[1]);
+                                
+                                correct = game.PlacePiece(new Pos(x, y));
+                                if (!correct) {
+                                    System.out.println("That move is not allowed, try again");
+                                }
+                            }
+                        } else {
+                            if (split[0].charAt(0) == 'q') {
+                                System.out.println("Thanks for playing!");
+                                System.exit(0);
+                            }
+                            System.out.println("That move is not allowed, try again");
+                        }
+                    } catch (NumberFormatException e) {
                         System.out.println("That move is not allowed, try again");
                     }
                 }

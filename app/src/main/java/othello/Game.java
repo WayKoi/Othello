@@ -1,6 +1,11 @@
 package othello;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
     private Board board = new Board();
@@ -90,6 +95,96 @@ public class Game {
         } else {
             passes = 0;
         }
+    }
+    
+    public boolean SaveToFile (String path) {
+        // File is formatted like below
+        /*
+        turn player (b or w)
+        ..........
+        ...b.w....
+        ..wb.bwwb.
+        .wbwbwwbw.
+        .bbw.b....
+        ..........
+         */
+         
+        try {
+            File test = new File(path);
+            if (!test.exists() && !test.isDirectory()) {
+                test.createNewFile();
+            }
+            
+            String types = ".bw";
+            FileWriter write = new FileWriter(path);
+            write.append(types.charAt(turn.ordinal()));
+            write.append("\n" + board.toString());
+            write.close();
+            
+        } catch (IOException e) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean LoadBoard (String path) {
+        try {
+            File test = new File(path);
+            if (test.exists() && !test.isDirectory()) {
+                ArrayList<String> lines = new ArrayList<String>();
+                
+                Scanner scan = new Scanner(test);
+                while (scan.hasNextLine()) {
+                    lines.add(scan.nextLine());
+                }
+                scan.close();
+                
+                switch (lines.get(0).charAt(0)) {
+                    case '.':
+                        turn = Space.None;
+                        break;
+                    case 'b':
+                        turn = Space.Black;
+                        break;
+                    case 'w':
+                        turn = Space.White;
+                        break;
+                }
+                
+                lines.remove(0);
+
+                board = new Board();
+                for (int i = 1; i <= Board.BoardSize; i++) {
+                    for (int ii = 1; ii <= Board.BoardSize; ii++) {
+                        Space spot = Space.None;
+                        switch (lines.get(i).charAt(ii)) {
+                            case '.':
+                                spot = Space.None;
+                                break;
+                            case 'b':
+                                spot = Space.Black;
+                                break;
+                            case 'w':
+                                spot = Space.White;
+                                break;
+                        }
+                    
+                        board.ReplacePiece(spot, ii, i);
+                    }
+                }
+                
+                possible = board.GetPossibleMoves(turn);
+            } else {
+                return false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        
+        return true;
     }
     
     private void CalculateWinner () {
