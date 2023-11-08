@@ -36,10 +36,22 @@ public class App {
                             players[1] = false;
                             break;
                         case 1:
-                            System.out.print("Play black or white? (0 = black, 1 = white)\n> ");
-                            int col = Math.min(Math.max(inp.nextInt(), 0), 1);
+                            boolean correct = false;
+                        
+                            while (!correct) {
+                                System.out.print("Play black or white? (0 = black, 1 = white)\n> ");
+                                String input = inp.nextLine();
+                                
+                                try {
+                                    int col = Math.min(Math.max(Integer.parseInt(input), 0), 1);
+                                    
+                                    players[(col + 1) % 2] = false;
+                                    correct = true;
+                                } catch (NumberFormatException e) {
+                                    System.out.println("That is not a valid input");
+                                }
+                            }
                             
-                            players[(col + 1) % 2] = false;
                             break;
                         case 2:
                             break;
@@ -52,8 +64,7 @@ public class App {
                 }
             }
         }
-
-        inp.nextLine();
+        
         Space player = game.CurrentTurn();
         while (!game.IsGameOver()) {
             String turn = GetTurnName(game.CurrentTurn());
@@ -67,6 +78,7 @@ public class App {
                 while (!correct) {
                     System.out.print("\nEnter Move to make (x y)\n> ");
                     String input = inp.nextLine();
+                    if (input.length() <= 0)  { continue; }
                     String[] split = input.split(" ");
                     
                     try {
