@@ -53,6 +53,7 @@ public class App {
             }
         }
 
+        inp.nextLine();
         Space player = game.CurrentTurn();
         while (!game.IsGameOver()) {
             String turn = GetTurnName(game.CurrentTurn());
