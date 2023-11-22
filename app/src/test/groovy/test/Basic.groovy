@@ -4,17 +4,35 @@
 package othello
 
 import spock.lang.Specification
+import java.util.ArrayList
 
 class Basic extends Specification {
-    def "Tie game"() {
+    def "Replace a piece on the board"() {
         setup:
-        def game = new Game()
+        def board = new Board()
         
         when:
-        game.CalculateWinner()
-        def result = game.GetWinner()
+        board.ReplacePiece(Space.White, 1, 1)
+        def result = board.board[1][1]
         
         then:
-        result == Space.None;
+        result == Space.White
+    }
+    
+    def "Play a move"() {
+        setup:
+        def board = new Board()
+        def flips = new ArrayList<Pos>()
+        flips.add(new Pos(4, 4))
+        def move = new Move(new Pos(4, 3), Space.Black, flips)
+        board.PlayMove(move)
+        
+        expect:
+        board.board[x][y] == space
+        
+        where:
+        x << [4, 4, 4, 5, 5]
+        y << [3, 4, 5, 4, 5]
+        space << [Space.Black, Space.Black, Space.Black, Space.Black, Space.White]
     }
 }
