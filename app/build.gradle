@@ -6,6 +6,9 @@
  */
 
 plugins {
+    // Apply the groovy plugin to also add support for Groovy (needed for Spock)
+    id 'groovy'
+
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 }
@@ -16,8 +19,12 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    // Use the latest Groovy version for Spock testing
+    testImplementation 'org.codehaus.groovy:groovy:3.0.18'
+
+    // Use the awesome Spock testing and specification framework even with Java
+    testImplementation 'org.spockframework:spock-core:2.2-groovy-3.0'
+    testImplementation 'junit:junit:4.13.2'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
