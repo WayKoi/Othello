@@ -4,6 +4,11 @@
 package othello;
 
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
@@ -14,5 +19,28 @@ class AppTest {
 
         board.ReplacePiece(Space.White, 1, 1);
         assertEquals(board.getPiece(1, 1), Space.White);
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePerameters")
+    void PlayMoveTest(int x, int y, Space space) {
+        Board board = new Board();
+        ArrayList<Pos> flips = new ArrayList<Pos>();
+        flips.add(new Pos(4, 4));
+        Move move = new Move(new Pos(4, 3), Space.Black, flips);
+        board.PlayMove(move);
+
+        assertEquals(board.getPiece(x, y), space);
+
+    }
+
+    private static Stream<Arguments> providePerameters() {
+        return Stream.of(
+            Arguments.of(4, 3, Space.Black),
+            Arguments.of(4, 4, Space.Black),
+            Arguments.of(4, 5, Space.Black),
+            Arguments.of(5, 4, Space.Black),
+            Arguments.of(5, 5, Space.White)
+        );
     }
 }
