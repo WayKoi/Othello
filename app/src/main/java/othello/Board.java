@@ -11,6 +11,10 @@ public class Board {
     }
 
     private Space[][] board = new Space[BoardSize + 2][BoardSize + 2];
+
+    public getPiece(x, y) {
+        return board[x][y];
+    }
     
     public Board () {
         for (int i = 0; i < BoardSize + 2; i++) {
