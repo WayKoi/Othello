@@ -12,7 +12,7 @@ public class Board {
 
     private Space[][] board = new Space[BoardSize + 2][BoardSize + 2];
 
-    public getPiece(x, y) {
+    public Space getPiece(int x, int y) {
         return board[x][y];
     }
     
