@@ -42,6 +42,10 @@ public class Game {
         
         return positions;
     }
+
+    public Space getBoardPiece(int x, int y) {
+        return board.getPiece(x, y);
+    }
     
     public String GetBoardString () {
         return board.toString();
