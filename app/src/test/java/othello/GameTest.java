@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.ArrayList;
 
+
 @ExtendWith (MockitoExtension.class)
 public class GameTest {
 
@@ -57,7 +58,9 @@ public class GameTest {
             spyList.add(new Pos(move.Position));
         }
         
-
+        
         verify(spyList, times(4)).add(any());
+        
     }
+
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Game {
     public Board board = new Board();
-    private Space turn = Space.Black; // Black always moves first
+    Space turn = Space.Black; // Black always moves first
     
     public ArrayList<Move> possible;
     private int passes = 0;
