@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
-    private Board board = new Board();
+    public Board board = new Board();
     private Space turn = Space.Black; // Black always moves first
     
-    private ArrayList<Move> possible;
+    public ArrayList<Move> possible;
     private int passes = 0;
     
     private boolean GameOver = false;
@@ -20,7 +20,7 @@ public class Game {
         return GameOver;
     }
     
-    private Space Winner = Space.None;
+    Space Winner = Space.None;
     
     public Space GetWinner () {
         return Winner;
